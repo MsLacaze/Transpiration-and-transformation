@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plant Power! The Transpiration Quest</title>
+
+<style>
+:root{
+ --forest:#164b3b;--leaf:#2e8b57;--lime:#c5e86c;--water:#8ed9ec;
+ --sun:#ffd166;--coral:#ff8f70;--lav:#b9a4ed;--cream:#fffdf4;--ink:#19372d;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;color:var(--ink);font:16px/1.55 "Trebuchet MS",Arial,sans-serif;
+ background:
+ radial-gradient(circle at 8% 12%,#fff1b8 0 5px,transparent 6px),
+ radial-gradient(circle at 92% 28%,#c4e8d0 0 7px,transparent 8px),
+ radial-gradient(circle at 14% 76%,#c8eaf0 0 6px,transparent 7px),
+ linear-gradient(135deg,#f1f8e9 0%,#e7f5f4 48%,#fff3e4 100%);
+ background-size:180px 180px,220px 220px,250px 250px,auto;
+}
+.hero{
+ background:
+ radial-gradient(circle at 12% 20%,#f8d76a 0 28px,transparent 29px),
+ radial-gradient(circle at 88% 18%,#8bd5a1 0 45px,transparent 46px),
+ radial-gradient(circle at 78% 105%,#55a9a0 0 95px,transparent 96px),
+ linear-gradient(125deg,#103b32 0%,#216c4b 52%,#39865a 100%);
+ color:white;text-align:center;padding:42px 18px 34px;position:relative;overflow:hidden;
+ border-bottom:7px solid #f4c95d;
+}
+.hero:before,.hero:after{content:"";position:absolute;bottom:-45px;width:180px;height:130px;background:#9ccc65;opacity:.25;border-radius:100% 0 100% 0}
+.hero:before{left:-28px;transform:rotate(-18deg)}.hero:after{right:-25px;transform:rotate(75deg)}
+.hero>*{position:relative}.tag{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:#e3f5c8;font-weight:bold}
+h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1;margin:13px 0;text-shadow:0 4px 0 #0b3328}
+.hero p{max-width:700px;margin:0 auto;color:#f0f8e8;font-size:1.08rem}
+.shell{max-width:1000px;margin:auto;padding:18px 15px 55px}
+.status{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fffdf4;border:2px solid #d4e6bd;border-radius:18px;padding:13px 16px;margin:12px 0;box-shadow:0 4px 0 #d8e7cf}
+.track{height:14px;flex:1;min-width:110px;background:#dcebd7;border-radius:20px;overflow:hidden;border:1px solid #c5d9bd}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#ffca5c,#8fcf68,#39a77a);border-radius:20px;transition:width .35s}
+.badge{background:#ffe08a;border:1px solid #efc65b;border-radius:20px;padding:5px 12px;font-weight:bold;color:#614814}
+.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:17px 0}
+.map a{background:#fff;border:2px solid #d5e5d0;border-radius:16px;padding:11px;text-decoration:none;color:var(--forest);font-weight:bold;text-align:center;box-shadow:0 3px 0 #d8e5d3;transition:transform .15s,border-color .15s}
+.map a:hover{transform:translateY(-3px);border-color:#f0bd4e}.map a span{display:block;font-size:1.8rem;margin-bottom:2px}
+.stage{
+ background:var(--cream);border:2px solid #d7e6d1;border-radius:22px;padding:24px;margin:20px 0;
+ scroll-margin-top:12px;box-shadow:0 6px 0 #d7e4d0,0 10px 24px #244b3210;position:relative;overflow:hidden
+}
+.stage:after{content:"";position:absolute;right:-25px;top:-32px;width:95px;height:95px;border-radius:50%;background:#dff0d9;opacity:.65;pointer-events:none}
+.stage:nth-of-type(odd){border-top:6px solid #72bb73}.stage:nth-of-type(even){border-top:6px solid #78c9d7}
+.stagehead{display:flex;align-items:center;gap:12px;margin-bottom:15px;position:relative;z-index:1}
+.number{background:linear-gradient(135deg,#174c3a,#33895b);color:white;border-radius:13px;padding:8px 13px;font-weight:bold;box-shadow:0 3px 0 #b4d3ad;white-space:nowrap}
+.stage h2{margin:0;color:#174b38;font-size:1.6rem}
+.story{background:linear-gradient(110deg,#edf7e8,#e6f4f3);border-left:6px solid #54a66d;padding:16px 18px;border-radius:0 14px 14px 0;position:relative;z-index:1}
+.story p{margin:7px 0}.mini{color:#547063;font-size:.9rem}
+.btn{border:0;border-radius:12px;padding:11px 17px;background:linear-gradient(135deg,#1c6448,#318b5a);color:white;font-weight:bold;font-size:1rem;cursor:pointer;margin:5px 5px 5px 0;min-height:44px;box-shadow:0 3px 0 #b6d1b3;transition:transform .12s,filter .12s}
+.btn:hover{filter:brightness(1.08);transform:translateY(-2px)}.btn:active{transform:translateY(1px);box-shadow:none}
+.btn.alt{background:#e1f1e6;color:#174b38;border:1px solid #bad8c0;box-shadow:0 3px 0 #cbdcc9}
+.btn.sun{background:linear-gradient(135deg,#ffd36a,#f4a94d);color:#493411;box-shadow:0 3px 0 #e4c27d}
+.feedback{min-height:27px;font-weight:bold;margin:9px 0;padding:4px 0}.good{color:#167044}.bad{color:#a23d32}
+.quiz{padding:14px 0;border-top:1px dashed #cbdcc7}.quiz:first-of-type{border-top:0}
+.choice{display:block;background:#fff;border:1.5px solid #d8e5d3;border-radius:12px;padding:11px 13px;margin:8px 0;cursor:pointer;transition:background .12s,border-color .12s}
+.choice:hover{background:#f2faed;border-color:#86bd8b}.choice:has(input:checked){border-color:#3b9561;background:#e9f6e8;box-shadow:inset 4px 0 #3b9561}
+.choice input{margin-right:8px;accent-color:#2e8b57}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.tile{background:linear-gradient(145deg,#fff,#f0f8ec);border:1.5px solid #d7e6d2;border-radius:15px;padding:14px;box-shadow:0 3px 0 #e0eadc}
+.tile h3{margin:0 0 6px;color:#286447}
+.visual{background:linear-gradient(130deg,#dff2e4,#d8eff5 55%,#fff0ce);border:1px solid #cce1d5;border-radius:17px;padding:18px;margin:15px 0;text-align:center}
+.tree{font-size:2.5rem;filter:drop-shadow(0 3px 1px #aac7a5)}
+.flow{display:flex;gap:7px;align-items:center;justify-content:center;flex-wrap:wrap;font-weight:bold;color:#174a37}
+.flow b{background:white;border:1px solid #b9d5c2;padding:9px 12px;border-radius:11px;box-shadow:0 2px 0 #d6e6d4}.flow i{font-style:normal;font-size:1.3rem;color:#2c8c66}
+.slots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:13px 0}
+.slot{background:#fff;border:2px dashed #9eb99e;border-radius:11px;padding:10px;min-width:95px;min-height:44px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{background:#e4f2dc;border:1.5px solid #a9cba1;color:#194b35;border-radius:22px;padding:10px 14px;font-weight:bold;cursor:pointer;min-height:42px}
+.chip:hover{background:#d4ebc9}.chip:disabled{opacity:.4;cursor:default}
+.big{font-size:1.15rem;font-weight:bold}
+input[type=text],select{font:inherit;padding:10px;border:1.5px solid #b7cbb8;border-radius:10px;background:white;max-width:100%;min-height:42px}
+.blank{width:135px;margin:3px}
+.scenario{background:linear-gradient(130deg,#e9f6f7,#edf7e9);border:1px solid #c7dce2;padding:15px;border-radius:15px;margin:11px 0}
+.stoma-wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:center}
+.stoma{width:160px;height:140px;background:#d9f0c9;border:2px solid #8ab77b;border-radius:50%;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer}
+.guard{width:42px;height:92px;background:linear-gradient(90deg,#62bd78,#3f985e);border:3px solid #28744a;border-radius:50%;transform:rotate(14deg)}
+.guard.right{transform:rotate(-14deg)}.pore{height:55px;width:8px;background:#173d2c;border-radius:10px;transition:.2s}.stoma.closed .pore{width:2px}
+.result{font-size:1.2rem;font-weight:bold;color:#174b38}
+footer{text-align:center;color:#597064;padding:22px}
+@media(max-width:540px){.stage{padding:17px}.stage h2{font-size:1.28rem}.status{font-size:.9rem}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.status,.map,.btn{display:none!important}.stage{break-inside:avoid;box-shadow:none}}
+</style>
+
+</head>
+<body>
+<header class="hero"><div class="tag">A plant science mission • Aotearoa</div><h1>🌿 PLANT POWER!</h1><p><b>The Transpiration Quest</b><br>Can you help a giant kauri move water from its roots to the very top of its canopy? Complete the challenges, collect leaf points and unlock the final mission.</p></header>
+<main class="shell">
+<div class="status"><b>🌱 Leaf points: <span id="score">0</span></b><div class="track"><div class="bar" id="bar"></div></div><b id="progress">0 / 8 missions</b><span class="badge" id="rank">Seedling</span></div>
+<div class="map">
+<a href="#mission1"><span>💧</span>1. Water trail</a><a href="#mission2"><span>🚪</span>2. Stomata lab</a><a href="#mission3"><span>🌬️</span>3. Weather control</a><a href="#mission4"><span>🌳</span>4. Forest detective</a><a href="#mission5"><span>🧪</span>5. Experiment zone</a><a href="#mission6"><span>🔢</span>6. Density dash</a><a href="#mission7"><span>🌵</span>7. Adaptation match</a><a href="#mission8"><span>🏆</span>8. Boss battle</a>
+</div>
+
+<section class="stage" id="mission1"><div class="stagehead"><span class="number">MISSION 1</span><h2>💧 The great water trail</h2></div>
+<div class="story"><p>Plants need water for photosynthesis, transporting dissolved minerals and keeping their cells firm. Roots absorb water from the soil. It travels upwards through <b>xylem</b>, a transport tissue that forms a continuous pathway through roots, stems and leaves.</p><p>Inside leaves, water evaporates and becomes water vapour. The vapour diffuses out through tiny pores called <b>stomata</b>. This loss of water vapour is <b>transpiration</b>. Evaporation creates tension (a pulling force) in the xylem. <b>Cohesion</b> makes water molecules stick to each other, while <b>adhesion</b> makes them stick to xylem walls. Together these help keep water moving upwards.</p></div>
+<div class="visual"><div class="tree">🌳</div><div class="flow"><b>Soil</b><i>→</i><b>Roots</b><i>→</i><b>Xylem</b><i>→</i><b>Leaves</b><i>→</i><b>Water vapour</b></div><p class="mini">The route water takes through a plant</p></div>
+<h3>Activity A: Put the journey in order</h3><p>Tap the stages in the correct order, starting with where the plant gets its water.</p>
+<div class="chips" id="orderChoices"><button class="chip" data-step="Leaves">Leaves</button><button class="chip" data-step="Soil water">Soil water</button><button class="chip" data-step="Water vapour exits stomata">Water vapour exits stomata</button><button class="chip" data-step="Xylem">Xylem</button><button class="chip" data-step="Roots">Roots</button></div>
+<div class="slots" id="orderSlots"></div><button class="btn" id="checkOrder">Check my sequence</button><button class="btn alt" id="resetOrder">Try again</button><div class="feedback" id="orderFeedback" aria-live="polite"></div>
+<h3>Activity B: Quick-fire question</h3><div class="quiz"><b>What creates the pulling force that helps water move upwards?</b><label class="choice"><input type="radio" name="q1" value="a"> The roots actively pump water all the way to the leaves</label><label class="choice"><input type="radio" name="q1" value="b"> Evaporation from the leaves creates tension in the xylem</label><label class="choice"><input type="radio" name="q1" value="c"> Gravity pulls water up the trunk</label><button class="btn" onclick="radioCheck('q1','b','f1','Evaporation creates tension in the xylem, helping pull the water column upwards.')">Lock answer</button><div id="f1" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission2"><div class="stagehead"><span class="number">MISSION 2</span><h2>🚪 Stomata lab: open or shut?</h2></div>
+<div class="story"><p><b>Stomata</b> are tiny pores, usually on leaves. Carbon dioxide enters through them for photosynthesis; oxygen and water vapour can also pass out. Each pore is controlled by two <b>guard cells</b>. When guard cells take in water they become firm (<b>turgid</b>) and the stoma opens. When they lose water they become less firm (<b>flaccid</b>) and the stoma closes. Open stomata help gas exchange but allow water vapour to escape. Closed stomata conserve water but limit carbon dioxide entry.</p></div>
+<h3>Activity A: Be the guard cell!</h3><p>Choose a condition and decide whether the stoma should open or close to manage water loss.</p>
+<div class="scenario"><b id="stomaScenario">A hot, dry afternoon arrives. The plant is losing water quickly.</b><div class="stoma-wrap"><button class="stoma" id="stomaGraphic" aria-label="Toggle stoma"><span class="guard"></span><span class="pore"></span><span class="guard right"></span></button><div><div class="big" id="stomaState">STOMA OPEN</div><p class="mini" id="stomaExplain">Water vapour can escape through the pore.</p></div></div><button class="btn" onclick="setStoma(false)">Close the stoma</button><button class="btn alt" onclick="setStoma(true)">Open the stoma</button><div id="stomaFeedback" class="feedback" aria-live="polite"></div></div>
+<h3>Activity B: Pick the best explanation</h3><div class="quiz"><b>Why does closing stomata help a plant during dry conditions?</b><label class="choice"><input type="radio" name="q2" value="a"> It reduces water vapour escaping, but also limits carbon dioxide entering</label><label class="choice"><input type="radio" name="q2" value="b"> It makes the plant absorb extra water through its leaves</label><label class="choice"><input type="radio" name="q2" value="c"> It makes photosynthesis happen faster</label><button class="btn" onclick="radioCheck('q2','a','f2','Closing stomata reduces water loss, but less carbon dioxide can enter for photosynthesis.')">Lock answer</button><div id="f2" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission3"><div class="stagehead"><span class="number">MISSION 3</span><h2>🌬️ Weather control room</h2></div>
+<div class="story"><p>Four environmental factors change transpiration. <b>Temperature:</b> warmer conditions usually speed evaporation. <b>Humidity:</b> humid air slows diffusion of water vapour out of leaves. <b>Wind:</b> removes moist air around leaves, increasing water loss. <b>Light:</b> usually encourages stomata to open for photosynthesis, allowing more water vapour to escape.</p></div>
+<h3>Activity A: Predict the transpiration rate</h3><p>Choose the likely effect for each weather report.</p>
+<div class="quiz"><b>1. A hot, windy afternoon.</b><select id="weather1"><option value="">Choose an effect...</option><option value="up">Transpiration increases</option><option value="down">Transpiration decreases</option></select></div>
+<div class="quiz"><b>2. A cool day with very humid air.</b><select id="weather2"><option value="">Choose an effect...</option><option value="up">Transpiration increases</option><option value="down">Transpiration decreases</option></select></div>
+<div class="quiz"><b>3. Bright light encourages stomata to open.</b><select id="weather3"><option value="">Choose an effect...</option><option value="up">Transpiration can increase</option><option value="down">Transpiration must stop</option></select></div>
+<button class="btn" onclick="checkWeather()">Submit weather report</button><div id="weatherFeedback" class="feedback"></div>
+<h3>Activity B: Find the odd one out</h3><div class="quiz"><b>Which condition would usually slow the diffusion of water vapour out of a leaf?</b><label class="choice"><input type="radio" name="q3" value="a"> Strong wind</label><label class="choice"><input type="radio" name="q3" value="b"> Low relative humidity</label><label class="choice"><input type="radio" name="q3" value="c"> High relative humidity</label><button class="btn" onclick="radioCheck('q3','c','f3','Humid air already contains more water vapour, reducing the concentration difference and slowing diffusion.')">Lock answer</button><div id="f3" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission4"><div class="stagehead"><span class="number">MISSION 4</span><h2>🌳 Forest detective</h2></div>
+<div class="story"><p>The <b>canopy</b> is the upper layer of a forest formed by tree crowns. Trees release water vapour through transpiration. Evaporation uses energy and can cool leaves and nearby air. Water vapour from vegetation can contribute to cloud formation and rainfall, depending on wider weather conditions. The canopy creates a <b>microclimate</b> – local environmental conditions. Shade can keep the forest floor cooler and often more humid. Removing forest can change local temperatures, shade and water movement.</p></div>
+<h3>Activity A: Build the forest fact file</h3><p>Match each forest effect to the correct description.</p>
+<div class="grid2">
+<div class="tile"><b>Canopy shade</b><select id="forest1"><option value="">Choose...</option><option value="cool">Can help keep the forest floor cooler</option><option value="heat">Makes the forest floor hotter</option></select></div>
+<div class="tile"><b>Transpiration</b><select id="forest2"><option value="">Choose...</option><option value="vapour">Releases water vapour into the air</option><option value="soil">Turns water into soil minerals</option></select></div>
+<div class="tile"><b>Microclimate</b><select id="forest3"><option value="">Choose...</option><option value="local">Local environmental conditions</option><option value="global">The climate of the whole planet</option></select></div>
+</div><button class="btn" onclick="checkForest()">Check forest file</button><div id="forestFeedback" class="feedback"></div>
+<h3>Activity B: Stream-side survival</h3><div class="quiz"><b>How can removing riparian plants harm a stream ecosystem?</b><label class="choice"><input type="radio" name="q4" value="a"> The water warms and soil washes from the banks into the stream</label><label class="choice"><input type="radio" name="q4" value="b"> The stream stops flowing because roots no longer push water</label><label class="choice"><input type="radio" name="q4" value="c"> Evaporation makes oxygen levels rise rapidly</label><button class="btn" onclick="radioCheck('q4','a','f4','Without streamside shade and roots, water can warm and more soil can wash into the stream.')">Lock answer</button><div id="f4" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission5"><div class="stagehead"><span class="number">MISSION 5</span><h2>🧪 Experiment zone</h2></div>
+<div class="story"><p>A leafy plant cutting can be placed inside a clear plastic bag or transparent container, sealed around the stem and left in a suitable light location. Water vapour released by leaves can collect as droplets on the inside surface. A control setup without leaves helps check whether droplets come from the plant rather than another source. Droplets show water vapour has been released and condensed, but do not measure the exact rate of transpiration.</p></div>
+<h3>Activity: You are the scientist</h3>
+<div class="quiz"><b>1. What observation is evidence that water vapour has been released by the plant?</b><label class="choice"><input type="radio" name="q5" value="a"> Droplets appear inside the clear bag</label><label class="choice"><input type="radio" name="q5" value="b"> The plant changes colour immediately</label><label class="choice"><input type="radio" name="q5" value="c"> The roots grow out of the container</label><button class="btn" onclick="radioCheck('q5','a','f5','Water vapour released by leaves can condense into droplets on the inside surface.')">Check</button><div id="f5" class="feedback"></div></div>
+<div class="quiz"><b>2. Why include a control setup without leaves?</b><label class="choice"><input type="radio" name="q6" value="a"> To check whether droplets form without transpiration from leaves</label><label class="choice"><input type="radio" name="q6" value="b"> To make the plant grow faster</label><label class="choice"><input type="radio" name="q6" value="c"> To increase the temperature</label><button class="btn" onclick="radioCheck('q6','a','f6','A control helps show whether the plant leaves are the source of the water droplets.')">Check</button><div id="f6" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission6"><div class="stagehead"><span class="number">MISSION 6</span><h2>🔢 Stomatal density dash</h2></div>
+<div class="story"><p>Scientists can estimate stomatal density by making a leaf impression, viewing it under a microscope and counting stomata in a known area. Density means the number of stomata per square millimetre. Divide the number counted by the area examined.</p></div>
+<div class="visual"><div class="big">28 stomata ÷ 0.2 mm² = 140 stomata/mm²</div><p class="mini">Worked example – now you try!</p></div>
+<div class="quiz"><b>A leaf impression contains 36 stomata in an area of 0.3 mm². What is the stomatal density?</b><p><input id="densityAnswer" type="text" placeholder="Enter your answer"></p><button class="btn" onclick="checkDensity()">Calculate!</button><div id="densityFeedback" class="feedback"></div></div>
+<div class="quiz"><b>Bonus: What happens to the calculated density if you count the same number of stomata in a smaller area?</b><label class="choice"><input type="radio" name="q7" value="a"> The density is higher</label><label class="choice"><input type="radio" name="q7" value="b"> The density is lower</label><label class="choice"><input type="radio" name="q7" value="c"> The density stays the same</label><button class="btn" onclick="radioCheck('q7','a','f7','The same number packed into a smaller area means more stomata per square millimetre.')">Check</button><div id="f7" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission7"><div class="stagehead"><span class="number">MISSION 7</span><h2>🌵 Adaptation match-up</h2></div>
+<div class="story"><p><b>Hydrophytes</b> are water plants. Floating leaves often have stomata on top; submerged leaves may have none. <b>Mesophytes</b> live in moderately moist habitats and often have most stomata on the lower leaf surface. <b>Xerophytes</b> live in dry habitats and may have sunken stomata, thick cuticles or rolled leaves to reduce water loss.</p></div>
+<h3>Activity A: Match the plant group to its habitat</h3>
+<div class="grid2"><div class="tile">💦 <b>Hydrophyte</b><select id="a1"><option value="">Habitat...</option><option value="wet">Aquatic / very wet</option><option value="mid">Moderately moist</option><option value="dry">Dry</option></select></div><div class="tile">🌿 <b>Mesophyte</b><select id="a2"><option value="">Habitat...</option><option value="wet">Aquatic / very wet</option><option value="mid">Moderately moist</option><option value="dry">Dry</option></select></div><div class="tile">🌵 <b>Xerophyte</b><select id="a3"><option value="">Habitat...</option><option value="wet">Aquatic / very wet</option><option value="mid">Moderately moist</option><option value="dry">Dry</option></select></div></div>
+<button class="btn" onclick="checkAdapt()">Check matches</button><div id="adaptFeedback" class="feedback"></div>
+<h3>Activity B: Adaptation speed round</h3><div class="quiz"><b>Which three features can help xerophytes reduce water loss? Select all three.</b><label class="choice"><input type="checkbox" name="q8" value="a"> Sunken stomata</label><label class="choice"><input type="checkbox" name="q8" value="b"> Thick cuticle</label><label class="choice"><input type="checkbox" name="q8" value="c"> Rolled leaves</label><label class="choice"><input type="checkbox" name="q8" value="d"> Large exposed leaf surface in dry wind</label><button class="btn" onclick="multiCheck('q8',['a','b','c'],'f8','Sunken stomata, thick cuticles and rolled leaves can all help reduce water loss.')">Lock choices</button><div id="f8" class="feedback"></div></div>
+</section>
+
+<section class="stage" id="mission8"><div class="stagehead"><span class="number">FINAL MISSION</span><h2>🏆 The transpiration boss battle</h2></div>
+<p>The kauri is nearly at the top of the mountain. Complete the final challenge to earn your Plant Power title!</p>
+<div class="quiz"><b>1. Which statements are true? Select all that apply.</b><label class="choice"><input type="checkbox" name="boss1" value="a"> Wind can increase transpiration by removing moist air around leaves.</label><label class="choice"><input type="checkbox" name="boss1" value="b"> Sunken stomata can help some xerophytes reduce water loss.</label><label class="choice"><input type="checkbox" name="boss1" value="c"> Evaporation from leaves creates tension that helps pull water up xylem.</label><label class="choice"><input type="checkbox" name="boss1" value="d"> Plants use ATP to actively push water upwards through mature xylem vessels.</label><button class="btn" onclick="multiCheck('boss1',['a','b','c'],'bossFeedback','Wind can increase water loss, sunken stomata reduce it, and evaporation creates tension in xylem. Water is not actively pumped upwards using ATP through mature xylem vessels.')">Submit boss battle</button><div id="bossFeedback" class="feedback"></div></div>
+<div class="quiz"><b>2. Fill the missing scientific words to complete the water-transport story.</b>
+<p>Water enters through the <input class="blank" id="b1" type="text">, moves up the <input class="blank" id="b2" type="text">, and water vapour exits through <input class="blank" id="b3" type="text">. This water loss is called <input class="blank" id="b4" type="text">. Water molecules sticking to each other is called <input class="blank" id="b5" type="text">.</p>
+<button class="btn" onclick="checkFill()">Check missing words</button><div id="fillFeedback" class="feedback"></div></div>
+<div class="visual"><div class="tree">🌳✨</div><div class="result" id="finalRank">Your kauri mission is waiting...</div><p id="finalMessage">Complete the activities to earn your title.</p></div>
+<button class="btn sun" onclick="showFinal()">Reveal my Plant Power rank</button>
+<button class="btn alt" onclick="window.print()">Print this activity</button>
+</section>
+<footer>🌱 Plant Power! • Transpiration &amp; Transport • Science in Aotearoa</footer>
+</main>
+<script>
+const completed=new Set(),scores=new Set();
+function award(id,points=10){if(!completed.has(id)){completed.add(id);document.getElementById('score').textContent=[...scores].reduce((a,b)=>a+b,0)+points;scores.add(points);update();} }
+function update(){let n=completed.size;document.getElementById('bar').style.width=(n/8*100)+'%';document.getElementById('progress').textContent=n+' / 8 missions';document.getElementById('rank').textContent=n>=8?'Kauri Champion':n>=5?'Forest Guardian':n>=2?'Growing Explorer':'Seedling';}
+function msg(id,text,ok){let e=document.getElementById(id);e.textContent=text;e.className='feedback '+(ok?'good':'bad');}
+function radioCheck(name,answer,id,explain){let v=document.querySelector('input[name="'+name+'"]:checked');if(!v){msg(id,'Choose an answer first.',false);return}let ok=v.value===answer;msg(id,ok?'🌟 Correct! '+explain:'Not quite. Have another look at the reading and try again.',ok);if(ok)award('radio-'+name,5)}
+function multiCheck(name,answers,id,explain){let v=[...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value),ok=v.length===answers.length&&answers.every(x=>v.includes(x));msg(id,ok?'🌟 Perfect selection! '+explain:'Not quite. You need every correct choice and no incorrect choices.',ok);if(ok)award('multi-'+name,10)}
+const sequence=['Soil water','Roots','Xylem','Leaves','Water vapour exits stomata'];let picked=[];
+function renderOrder(){let slots=document.getElementById('orderSlots');slots.innerHTML='';for(let i=0;i<5;i++){let d=document.createElement('div');d.className='slot';d.textContent=(i+1)+'. '+(picked[i]||'...');slots.appendChild(d)}document.querySelectorAll('#orderChoices button').forEach(b=>b.disabled=picked.includes(b.dataset.step))}
+document.querySelectorAll('#orderChoices button').forEach(b=>b.addEventListener('click',()=>{if(picked.length<5){picked.push(b.dataset.step);renderOrder()}}));document.getElementById('checkOrder').addEventListener('click',()=>{let ok=picked.length===5&&picked.every((x,i)=>x===sequence[i]);msg('orderFeedback',ok?'🌟 Water trail complete! You have traced water from soil to the atmosphere.':'Not quite. Think about the path from the soil, through the plant, and out of the leaf.',ok);if(ok)award('order',15)});document.getElementById('resetOrder').addEventListener('click',()=>{picked=[];renderOrder();msg('orderFeedback','Sequence cleared. Try again!',true)});renderOrder();
+function setStoma(open){let g=document.getElementById('stomaGraphic');g.classList.toggle('closed',!open);document.getElementById('stomaState').textContent=open?'STOMA OPEN':'STOMA CLOSED';document.getElementById('stomaExplain').textContent=open?'Water vapour can escape through the open pore.':'Water loss is reduced, but less carbon dioxide can enter.';let correct=!open;msg('stomaFeedback',correct?'🌟 Good choice for a hot, dry day: closing helps conserve water.':'Think about the plant’s water supply. Is it safe to leave the pore open in hot, dry conditions?',correct);if(correct)award('stoma',10)}
+document.getElementById('stomaGraphic').addEventListener('click',()=>setStoma(!document.getElementById('stomaGraphic').classList.contains('closed')));
+function checkWeather(){let ok=weather1.value==='up'&&weather2.value==='down'&&weather3.value==='up';msg('weatherFeedback',ok?'🌟 Forecast correct! Heat, wind and light can increase transpiration; humid, cool conditions usually slow it.':'Review the four factors: heat, humidity, wind and light. Then try again.',ok);if(ok)award('weather',15)}
+function checkForest(){let ok=forest1.value==='cool'&&forest2.value==='vapour'&&forest3.value==='local';msg('forestFeedback',ok?'🌟 Forest fact file complete!':'One or more matches are mixed up. Re-read the forest passage.',ok);if(ok)award('forest',10)}
+function checkDensity(){let ok=Number(document.getElementById('densityAnswer').value)===120;msg('densityFeedback',ok?'🌟 Exactly right: 36 ÷ 0.3 = 120 stomata/mm².':'Try again. Divide the number of stomata by the area: 36 ÷ 0.3.',ok);if(ok)award('density',10)}
+function checkAdapt(){let ok=a1.value==='wet'&&a2.value==='mid'&&a3.value==='dry';msg('adaptFeedback',ok?'🌟 All habitats matched correctly!':'Try again: aquatic, moderate moisture or dry?',ok);if(ok)award('adapt',10)}
+function checkFill(){let a={b1:['roots','root'],b2:['xylem'],b3:['stomata','stoma'],b4:['transpiration'],b5:['cohesion']};let ok=Object.entries(a).every(([id,v])=>v.includes(document.getElementById(id).value.trim().toLowerCase()));msg('fillFeedback',ok?'🌟 All five scientific words are correct!':'Some blanks need another look. Check spelling and revisit Mission 1.',ok);if(ok)award('fill',10)}
+function showFinal(){let n=completed.size,rank=n>=8?'KAURI CHAMPION 🏆':n>=6?'FOREST GUARDIAN 🌳':n>=3?'GROWING EXPLORER 🌱':'SEEDLING 🌰';document.getElementById('finalRank').textContent=rank;document.getElementById('finalMessage').textContent=n>=8?'You completed every mission. You are a transpiration expert!':`You have completed ${n} of 8 missions. Keep exploring to unlock Kauri Champion!`;if(n===8)award('champion',0)}
+</script></body></html>
